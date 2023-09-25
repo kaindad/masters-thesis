@@ -1,12 +1,5 @@
 [
     {
-        "id": "561542e8.9e4a24",
-        "type": "tab",
-        "label": "MQTT authentication",
-        "disabled": false,
-        "info": "MQTT authentication flow"
-    },
-    {
         "id": "c0b63e7652249841",
         "type": "tab",
         "label": "iot-prototype-middleware-flows",
@@ -14,12 +7,511 @@
         "info": ""
     },
     {
-        "id": "4b7b4f37dcf534e5",
-        "type": "tab",
-        "label": "Flow 1",
-        "disabled": false,
-        "info": "",
-        "env": []
+        "id": "eeb5784c9fd288dc",
+        "type": "mqtt in",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "topic": "event/air_quality",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "236088dc.d74e48",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 200,
+        "y": 640,
+        "wires": [
+            [
+                "fcbed99b9afc6fc2",
+                "cbd28209fd738df3"
+            ]
+        ]
+    },
+    {
+        "id": "362293ed4278ecba",
+        "type": "debug",
+        "z": "c0b63e7652249841",
+        "name": "msg.airquality",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "c6ca3b0721bdef7e",
+        "type": "ui_gauge",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "group": "dd7116e95667f1b3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{msg.payload.humidity}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1020,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "71ae717088602b29",
+        "type": "ui_text",
+        "z": "c0b63e7652249841",
+        "group": "dd7116e95667f1b3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "humidity",
+        "format": "Humidity",
+        "layout": "col-center",
+        "className": "",
+        "x": 1020,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "fcbed99b9afc6fc2",
+        "type": "function",
+        "z": "c0b63e7652249841",
+        "name": "roundOffAirQualityValues",
+        "func": "// const humidity = msg.payload.humidity;\nconst humidity = Number(msg.payload.humidity.toFixed(2));\nmsg.payload.humidity = humidity;\n\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nmsg.payload.temperature = temperature;\n\nconst pressure = Number(msg.payload.air_pressure.toFixed(2));\nmsg.payload.air_pressure = pressure;\n\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nmsg.payload.altitude = altitude;\n\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nmsg.payload.gas_resistance = gasResistance;\n\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nmsg.payload.tvoc = tvoc;\n\nconst co2 = Number(msg.payload.co2.toFixed(2));\nmsg.payload.co2 = co2;\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 570,
+        "y": 740,
+        "wires": [
+            [
+                "362293ed4278ecba",
+                "c6ca3b0721bdef7e",
+                "71ae717088602b29",
+                "310556206a167e30",
+                "393f8e587e5236a3",
+                "98682e6e15d4e305",
+                "fe11f6a81e4dba6f",
+                "4a622add8ed52d54"
+            ]
+        ]
+    },
+    {
+        "id": "310556206a167e30",
+        "type": "ui_gauge",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "group": "4243c2eeceaa2c65",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "*C",
+        "format": "{{msg.payload.temperature}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 1030,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "393f8e587e5236a3",
+        "type": "ui_text",
+        "z": "c0b63e7652249841",
+        "group": "4243c2eeceaa2c65",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "temperature",
+        "format": "Temperature (*C)",
+        "layout": "col-center",
+        "className": "",
+        "x": 1030,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "fe11f6a81e4dba6f",
+        "type": "ui_gauge",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "group": "ee59d202d7a155e7",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "CO2 (PPM)",
+        "label": "units",
+        "format": "{{msg.payload.co2}}",
+        "min": "300",
+        "max": "8192",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1030,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "98682e6e15d4e305",
+        "type": "ui_gauge",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "group": "716cd48412361ade",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Pressure (hPa)",
+        "label": "units",
+        "format": "{{msg.payload.air_pressure}}",
+        "min": "1010",
+        "max": "1050",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1040,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "ec1a371d93a16e08",
+        "type": "Stackhero-InfluxDB-v2-write",
+        "z": "c0b63e7652249841",
+        "server": "cf6b032328d119b7",
+        "name": "",
+        "x": 1090,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e9b2107706830e3",
+        "type": "debug",
+        "z": "c0b63e7652249841",
+        "name": "msg.influxdb",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 850,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "cbd28209fd738df3",
+        "type": "function",
+        "z": "c0b63e7652249841",
+        "name": "prepareAirQualityInfluxDBPayload",
+        "func": "const humidity = Number(msg.payload.humidity.toFixed(2));\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nconst air_pressure = Number(msg.payload.air_pressure.toFixed(2));\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nconst co2 = Number(msg.payload.co2.toFixed(2));\n\nmsg.payload = {\n    bucket: 'environment_data',\n\n    // Precision of timestamp\n    precision: 'ms',\n\n    // Data to send to InfluxDB\n    // Can be an array of objects or only one object\n    data: [\n        {\n            measurement: 'air_quality',\n\n            tags: {\n                deviceId: 'DD8E6E9750304C39482E3120FF191304',\n                hardwareVersion: 'arduino-nano-iot-33',\n                softwareVersion: '1.0.0',\n                location: 'chicken-coop-1'\n            },\n            fields: {\n                temperature: temperature,\n                humidity: humidity,\n                air_pressure: air_pressure,\n                altitude: altitude,\n                gas_resistance: gasResistance,\n                tvoc: tvoc,\n                co2: co2\n            },\n\n            timestamp: Date.now()\n        },\n    ]\n};\n\nreturn msg;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 540,
+        "wires": [
+            [
+                "ec1a371d93a16e08",
+                "6e9b2107706830e3"
+            ]
+        ]
+    },
+    {
+        "id": "4a622add8ed52d54",
+        "type": "ui_gauge",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "group": "ee59d202d7a155e7",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "TVOC (ppb)",
+        "label": "pbb",
+        "format": "{{msg.payload.tvoc}}",
+        "min": 0,
+        "max": "1187",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1030,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "7566150713f02cb7",
+        "type": "mqtt in",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "topic": "event/sneeze_sounds",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "236088dc.d74e48",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 400,
+        "wires": [
+            [
+                "001d9452263a3b7c",
+                "69d334c5c8052dee",
+                "74f5d8cd6da85920"
+            ]
+        ]
+    },
+    {
+        "id": "4f7ba13d5e8658e5",
+        "type": "mqtt in",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "topic": "event/sneeze_videos",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "236088dc.d74e48",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "30093b5fa66a416b",
+                "74f5d8cd6da85920"
+            ]
+        ]
+    },
+    {
+        "id": "001d9452263a3b7c",
+        "type": "function",
+        "z": "c0b63e7652249841",
+        "name": "prepareSneezeInfluxDBPayload",
+        "func": "const humidity = Number(msg.payload.humidity.toFixed(2));\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nconst air_pressure = Number(msg.payload.air_pressure.toFixed(2));\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nconst co2 = Number(msg.payload.co2.toFixed(2));\n\nmsg.payload = {\n    bucket: 'environment_data',\n\n    // Precision of timestamp\n    precision: 'ms',\n\n    // Data to send to InfluxDB\n    // Can be an array of objects or only one object\n    data: [\n        {\n            measurement: 'air_quality',\n\n            tags: {\n                deviceId: 'ea5ab9b4-6532-42fc-a7bb-1c9b3955749d',\n                hardwareVersion: 'arduino-nano-iot-33',\n                softwareVersion: '1.0.0',\n                location: 'chicken-coop-1'\n            },\n            fields: {\n                temperature: temperature,\n                humidity: humidity,\n                air_pressure: air_pressure,\n                altitude: altitude,\n                gas_resistance: gasResistance,\n                tvoc: tvoc,\n                co2: co2\n            },\n\n            timestamp: Date.now()\n        },\n    ]\n};\n\nreturn msg;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 460,
+        "wires": [
+            [
+                "e228f67991144901"
+            ]
+        ]
+    },
+    {
+        "id": "e228f67991144901",
+        "type": "Stackhero-InfluxDB-v2-write",
+        "z": "c0b63e7652249841",
+        "server": "cf6b032328d119b7",
+        "name": "",
+        "x": 1090,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "69d334c5c8052dee",
+        "type": "mqtt out",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "topic": "event/sneeze_videos",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "236088dc.d74e48",
+        "x": 560,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "30093b5fa66a416b",
+        "type": "function",
+        "z": "c0b63e7652249841",
+        "name": "prepareVideoInfluxDBPayload",
+        "func": "const humidity = Number(msg.payload.humidity.toFixed(2));\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nconst air_pressure = Number(msg.payload.air_pressure.toFixed(2));\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nconst co2 = Number(msg.payload.co2.toFixed(2));\n\nmsg.payload = {\n    bucket: 'video_data',\n\n    // Precision of timestamp\n    precision: 'ms',\n\n    // Data to send to InfluxDB\n    // Can be an array of objects or only one object\n    data: [\n        {\n            measurement: 'air_quality',\n\n            tags: {\n                deviceId: '35ebf5be-861e-497b-a27f-6bacfa7678c0',\n                hardwareVersion: 'nvidia-jetson-nano',\n                softwareVersion: '1.0.0',\n                location: 'chicken-coop-1'\n            },\n            fields: {\n                temperature: temperature,\n                humidity: humidity,\n                air_pressure: air_pressure,\n                altitude: altitude,\n                gas_resistance: gasResistance,\n                tvoc: tvoc,\n                co2: co2\n            },\n\n            timestamp: Date.now()\n        },\n    ]\n};\n\nreturn msg;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "7b77a475b1cd54ec"
+            ]
+        ]
+    },
+    {
+        "id": "ccf15231d1cdcb5b",
+        "type": "e-mail",
+        "z": "c0b63e7652249841",
+        "server": "postfix",
+        "port": "25",
+        "secure": false,
+        "tls": false,
+        "name": "kaindad@gmail.com",
+        "dname": "Sneeze Detected Please Check!!!",
+        "x": 1100,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "7119b8f6f3f60e37",
+        "type": "function",
+        "z": "c0b63e7652249841",
+        "name": "composeEmailMessage",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 340,
+        "wires": [
+            [
+                "ccf15231d1cdcb5b"
+            ]
+        ]
+    },
+    {
+        "id": "7b77a475b1cd54ec",
+        "type": "Stackhero-InfluxDB-v2-write",
+        "z": "c0b63e7652249841",
+        "server": "cf6b032328d119b7",
+        "name": "",
+        "x": 1090,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "74f5d8cd6da85920",
+        "type": "join",
+        "z": "c0b63e7652249841",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 510,
+        "y": 300,
+        "wires": [
+            [
+                "7119b8f6f3f60e37",
+                "0ca326f223144f80"
+            ]
+        ]
+    },
+    {
+        "id": "28ddd91bf9675b72",
+        "type": "telegram sender",
+        "z": "c0b63e7652249841",
+        "name": "IoTSneezeNotifierBot",
+        "bot": "63e2e5f6a6cc5a5b",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1060,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0ca326f223144f80",
+        "type": "function",
+        "z": "c0b63e7652249841",
+        "name": "composeTelegramMessage",
+        "func": "msg = \"Hey Farmer Sneeze detected! Please check teh dashboard for other parameters\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 240,
+        "wires": [
+            [
+                "28ddd91bf9675b72"
+            ]
+        ]
     },
     {
         "id": "236088dc.d74e48",
@@ -93,111 +585,6 @@
         "className": ""
     },
     {
-        "id": "415d04bba55eb9da",
-        "type": "ui_tab",
-        "name": "Home",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "3622c13c7ed9cea0",
-        "type": "ui_base",
-        "theme": {
-            "name": "theme-light",
-            "lightTheme": {
-                "default": "#0094CE",
-                "baseColor": "#0094CE",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": true,
-                "reset": false
-            },
-            "darkTheme": {
-                "default": "#097479",
-                "baseColor": "#097479",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
-            },
-            "customTheme": {
-                "name": "Untitled Theme 1",
-                "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-            },
-            "themeState": {
-                "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
-                },
-                "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
-                    "edited": false
-                },
-                "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
-                },
-                "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
-                },
-                "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "widget-textColor": {
-                    "value": "#111111",
-                    "edited": false
-                },
-                "widget-backgroundColor": {
-                    "value": "#0094ce",
-                    "edited": false
-                },
-                "widget-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
-                },
-                "base-font": {
-                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
-                }
-            },
-            "angularTheme": {
-                "primary": "indigo",
-                "accents": "blue",
-                "warn": "red",
-                "background": "grey",
-                "palette": "light"
-            }
-        },
-        "site": {
-            "name": "Node-RED Dashboard",
-            "hideToolbar": "false",
-            "allowSwipe": "false",
-            "lockMenu": "false",
-            "allowTempTheme": "true",
-            "dateFormat": "DD/MM/YYYY",
-            "sizes": {
-                "sx": 48,
-                "sy": 48,
-                "gx": 6,
-                "gy": 6,
-                "cx": 6,
-                "cy": 6,
-                "px": 0,
-                "py": 0
-            }
-        }
-    },
-    {
         "id": "cf6b032328d119b7",
         "type": "Stackhero-InfluxDB-v2-Server",
         "name": "video_data",
@@ -231,631 +618,11 @@
         "verboselogging": false
     },
     {
-        "id": "518fdd2b.0938b4",
-        "type": "http in",
-        "z": "561542e8.9e4a24",
-        "name": "/mqttAuthentication/userGet",
-        "url": "/mqttAuthentication/userGet",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 200,
-        "y": 160,
-        "wires": [
-            [
-                "32aa9455.eb3cf4"
-            ]
-        ]
-    },
-    {
-        "id": "c3d2a88d.daf4a8",
-        "type": "function",
-        "z": "561542e8.9e4a24",
-        "name": "Authentication",
-        "func": "const found = msg.users.findIndex(([ username, password ]) => msg.payload.username === username && msg.payload.password === password) !== -1;\n\nconst msgResponse = Object.assign(\n    {},\n    msg,\n    { payload: { found }\n    }\n);\n\nif (found) {\n    return [ msgResponse, null ];\n}\nelse {\n    return [ null, msgResponse ];\n}",
-        "outputs": 2,
-        "noerr": 0,
-        "x": 780,
-        "y": 160,
-        "wires": [
-            [
-                "e5d39529.83e818"
-            ],
-            [
-                "658f6d7b.dadd5c"
-            ]
-        ]
-    },
-    {
-        "id": "e5d39529.83e818",
-        "type": "http response",
-        "z": "561542e8.9e4a24",
-        "name": "Accept (200)",
-        "statusCode": "200",
-        "headers": {},
-        "x": 1110,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "658f6d7b.dadd5c",
-        "type": "http response",
-        "z": "561542e8.9e4a24",
-        "name": "Reject (401)",
-        "statusCode": "401",
-        "headers": {},
-        "x": 1110,
-        "y": 260,
-        "wires": []
-    },
-    {
-        "id": "32aa9455.eb3cf4",
-        "type": "template",
-        "z": "561542e8.9e4a24",
-        "name": "Users",
-        "field": "users",
-        "fieldType": "msg",
-        "format": "json",
-        "syntax": "plain",
-        "template": "[\n    [ \"node-red\", \"pAHMQU2nY5uemZ3MdEGQEhTnBOFM92ab\" ],\n    [ \"user1\", \"3bxfWRCBFQEguGB5jQbqqckYxNU1wYap\" ],\n    [ \n        \"user2\", \n        \"GbSIejO1HMSERBYbEsjLhmf9JcKZix1N\" ],\n    [\n        \"iot33-air-quality\",\n        \"password1234\"\n    ]\n]",
-        "output": "json",
-        "x": 530,
-        "y": 160,
-        "wires": [
-            [
-                "c3d2a88d.daf4a8"
-            ]
-        ]
-    },
-    {
-        "id": "c87f669.2817618",
-        "type": "http in",
-        "z": "561542e8.9e4a24",
-        "name": "/mqttAuthentication/userSuper",
-        "url": "/mqttAuthentication/userSuper",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 200,
-        "y": 260,
-        "wires": [
-            [
-                "658f6d7b.dadd5c"
-            ]
-        ]
-    },
-    {
-        "id": "cd3a1fa1.a14c98",
-        "type": "http in",
-        "z": "561542e8.9e4a24",
-        "name": "/mqttAuthentication/aclCheck",
-        "url": "/mqttAuthentication/aclCheck",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 200,
-        "y": 60,
-        "wires": [
-            [
-                "e5d39529.83e818"
-            ]
-        ]
-    },
-    {
-        "id": "120753f0.f97f7c",
-        "type": "comment",
-        "z": "561542e8.9e4a24",
-        "name": "README",
-        "info": "This is the MQTT authentication flow used by Mosquitto server.\n\nYou can add or remove users in the template `Users`.\n\nThe format is: `[ \"username\", \"password\" ]`\n\nYou'll get more informations about this flow on [Stackhero's documentation](https://www.stackhero.io/services/Node-RED/documentations)",
-        "x": 593.5,
-        "y": 352,
-        "wires": []
-    },
-    {
-        "id": "eeb5784c9fd288dc",
-        "type": "mqtt in",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "topic": "event/air_quality",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "236088dc.d74e48",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 200,
-        "y": 660,
-        "wires": [
-            [
-                "fcbed99b9afc6fc2",
-                "cbd28209fd738df3"
-            ]
-        ]
-    },
-    {
-        "id": "362293ed4278ecba",
-        "type": "debug",
-        "z": "c0b63e7652249841",
-        "name": "msg.airquality",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1040,
-        "y": 900,
-        "wires": []
-    },
-    {
-        "id": "c6ca3b0721bdef7e",
-        "type": "ui_gauge",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "group": "dd7116e95667f1b3",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Humidity",
-        "label": "%",
-        "format": "{{msg.payload.humidity}}",
-        "min": "0",
-        "max": "100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 1020,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "71ae717088602b29",
-        "type": "ui_text",
-        "z": "c0b63e7652249841",
-        "group": "dd7116e95667f1b3",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "humidity",
-        "format": "Humidity",
-        "layout": "col-center",
-        "className": "",
-        "x": 1020,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "fcbed99b9afc6fc2",
-        "type": "function",
-        "z": "c0b63e7652249841",
-        "name": "roundOffAirQualityValues",
-        "func": "// const humidity = msg.payload.humidity;\nconst humidity = Number(msg.payload.humidity.toFixed(2));\nmsg.payload.humidity = humidity;\n\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nmsg.payload.temperature = temperature;\n\nconst pressure = Number(msg.payload.air_pressure.toFixed(2));\nmsg.payload.air_pressure = pressure;\n\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nmsg.payload.altitude = altitude;\n\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nmsg.payload.gas_resistance = gasResistance;\n\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nmsg.payload.tvoc = tvoc;\n\nconst co2 = Number(msg.payload.co2.toFixed(2));\nmsg.payload.co2 = co2;\n\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 570,
-        "y": 760,
-        "wires": [
-            [
-                "362293ed4278ecba",
-                "c6ca3b0721bdef7e",
-                "71ae717088602b29",
-                "310556206a167e30",
-                "393f8e587e5236a3",
-                "98682e6e15d4e305",
-                "fe11f6a81e4dba6f",
-                "4a622add8ed52d54"
-            ]
-        ]
-    },
-    {
-        "id": "310556206a167e30",
-        "type": "ui_gauge",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "group": "4243c2eeceaa2c65",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "Temperature",
-        "label": "*C",
-        "format": "{{msg.payload.temperature}}",
-        "min": 0,
-        "max": "100",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "className": "",
-        "x": 1030,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "393f8e587e5236a3",
-        "type": "ui_text",
-        "z": "c0b63e7652249841",
-        "group": "4243c2eeceaa2c65",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "temperature",
-        "format": "Temperature (*C)",
-        "layout": "col-center",
-        "className": "",
-        "x": 1030,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "fe11f6a81e4dba6f",
-        "type": "ui_gauge",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "group": "ee59d202d7a155e7",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "CO2 (PPM)",
-        "label": "units",
-        "format": "{{msg.payload.co2}}",
-        "min": "300",
-        "max": "8192",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 1030,
-        "y": 820,
-        "wires": []
-    },
-    {
-        "id": "98682e6e15d4e305",
-        "type": "ui_gauge",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "group": "716cd48412361ade",
-        "order": 2,
-        "width": 0,
-        "height": 0,
-        "gtype": "donut",
-        "title": "Pressure (hPa)",
-        "label": "units",
-        "format": "{{msg.payload.air_pressure}}",
-        "min": "1010",
-        "max": "1050",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 1040,
-        "y": 780,
-        "wires": []
-    },
-    {
-        "id": "ec1a371d93a16e08",
-        "type": "Stackhero-InfluxDB-v2-write",
-        "z": "c0b63e7652249841",
-        "server": "cf6b032328d119b7",
-        "name": "",
-        "x": 1090,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "6e9b2107706830e3",
-        "type": "debug",
-        "z": "c0b63e7652249841",
-        "name": "msg.influxdb",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1030,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "cbd28209fd738df3",
-        "type": "function",
-        "z": "c0b63e7652249841",
-        "name": "prepareAirQualityInfluxDBPayload",
-        "func": "const humidity = Number(msg.payload.humidity.toFixed(2));\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nconst air_pressure = Number(msg.payload.air_pressure.toFixed(2));\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nconst co2 = Number(msg.payload.co2.toFixed(2));\n\nmsg.payload = {\n    bucket: 'environment_data',\n\n    // Precision of timestamp\n    precision: 'ms',\n\n    // Data to send to InfluxDB\n    // Can be an array of objects or only one object\n    data: [\n        {\n            measurement: 'air_quality',\n\n            tags: {\n                deviceId: 'DD8E6E9750304C39482E3120FF191304',\n                hardwareVersion: 'arduino-nano-iot-33',\n                softwareVersion: '1.0.0',\n                location: 'chicken-coop-1'\n            },\n            fields: {\n                temperature: temperature,\n                humidity: humidity,\n                air_pressure: air_pressure,\n                altitude: altitude,\n                gas_resistance: gasResistance,\n                tvoc: tvoc,\n                co2: co2\n            },\n\n            timestamp: Date.now()\n        },\n    ]\n};\n\nreturn msg;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 600,
-        "y": 600,
-        "wires": [
-            [
-                "ec1a371d93a16e08",
-                "6e9b2107706830e3"
-            ]
-        ]
-    },
-    {
-        "id": "4a622add8ed52d54",
-        "type": "ui_gauge",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "group": "ee59d202d7a155e7",
-        "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "TVOC (ppb)",
-        "label": "pbb",
-        "format": "{{msg.payload.tvoc}}",
-        "min": 0,
-        "max": "1187",
-        "colors": [
-            "#00b500",
-            "#e6e600",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 1030,
-        "y": 860,
-        "wires": []
-    },
-    {
-        "id": "7566150713f02cb7",
-        "type": "mqtt in",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "topic": "event/sneeze_sounds",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "236088dc.d74e48",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 220,
-        "y": 420,
-        "wires": [
-            [
-                "001d9452263a3b7c",
-                "69d334c5c8052dee",
-                "74f5d8cd6da85920"
-            ]
-        ]
-    },
-    {
-        "id": "4f7ba13d5e8658e5",
-        "type": "mqtt in",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "topic": "event/sneeze_videos",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "236088dc.d74e48",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 220,
-        "y": 200,
-        "wires": [
-            [
-                "30093b5fa66a416b",
-                "74f5d8cd6da85920"
-            ]
-        ]
-    },
-    {
-        "id": "001d9452263a3b7c",
-        "type": "function",
-        "z": "c0b63e7652249841",
-        "name": "prepareSneezeInfluxDBPayload",
-        "func": "const humidity = Number(msg.payload.humidity.toFixed(2));\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nconst air_pressure = Number(msg.payload.air_pressure.toFixed(2));\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nconst co2 = Number(msg.payload.co2.toFixed(2));\n\nmsg.payload = {\n    bucket: 'environment_data',\n\n    // Precision of timestamp\n    precision: 'ms',\n\n    // Data to send to InfluxDB\n    // Can be an array of objects or only one object\n    data: [\n        {\n            measurement: 'air_quality',\n\n            tags: {\n                deviceId: 'ea5ab9b4-6532-42fc-a7bb-1c9b3955749d',\n                hardwareVersion: 'arduino-nano-iot-33',\n                softwareVersion: '1.0.0',\n                location: 'chicken-coop-1'\n            },\n            fields: {\n                temperature: temperature,\n                humidity: humidity,\n                air_pressure: air_pressure,\n                altitude: altitude,\n                gas_resistance: gasResistance,\n                tvoc: tvoc,\n                co2: co2\n            },\n\n            timestamp: Date.now()\n        },\n    ]\n};\n\nreturn msg;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 590,
-        "y": 480,
-        "wires": [
-            [
-                "e228f67991144901"
-            ]
-        ]
-    },
-    {
-        "id": "e228f67991144901",
-        "type": "Stackhero-InfluxDB-v2-write",
-        "z": "c0b63e7652249841",
-        "server": "cf6b032328d119b7",
-        "name": "",
-        "x": 1090,
-        "y": 360,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "69d334c5c8052dee",
-        "type": "mqtt out",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "topic": "event/sneeze_videos",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "236088dc.d74e48",
-        "x": 560,
-        "y": 380,
-        "wires": []
-    },
-    {
-        "id": "30093b5fa66a416b",
-        "type": "function",
-        "z": "c0b63e7652249841",
-        "name": "prepareVideoInfluxDBPayload",
-        "func": "const humidity = Number(msg.payload.humidity.toFixed(2));\nconst temperature = Number(msg.payload.temperature.toFixed(2));\nconst air_pressure = Number(msg.payload.air_pressure.toFixed(2));\nconst altitude = Number(msg.payload.altitude.toFixed(2));\nconst gasResistance = Number(msg.payload.gas_resistance.toFixed(2));\nconst tvoc = Number(msg.payload.tvoc.toFixed(2));\nconst co2 = Number(msg.payload.co2.toFixed(2));\n\nmsg.payload = {\n    bucket: 'video_data',\n\n    // Precision of timestamp\n    precision: 'ms',\n\n    // Data to send to InfluxDB\n    // Can be an array of objects or only one object\n    data: [\n        {\n            measurement: 'air_quality',\n\n            tags: {\n                deviceId: '35ebf5be-861e-497b-a27f-6bacfa7678c0',\n                hardwareVersion: 'nvidia-jetson-nano',\n                softwareVersion: '1.0.0',\n                location: 'chicken-coop-1'\n            },\n            fields: {\n                temperature: temperature,\n                humidity: humidity,\n                air_pressure: air_pressure,\n                altitude: altitude,\n                gas_resistance: gasResistance,\n                tvoc: tvoc,\n                co2: co2\n            },\n\n            timestamp: Date.now()\n        },\n    ]\n};\n\nreturn msg;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 590,
-        "y": 80,
-        "wires": [
-            [
-                "7b77a475b1cd54ec"
-            ]
-        ]
-    },
-    {
-        "id": "ccf15231d1cdcb5b",
-        "type": "e-mail",
-        "z": "c0b63e7652249841",
-        "server": "postfix",
-        "port": "25",
-        "secure": false,
-        "tls": false,
-        "name": "kaindad@gmail.com",
-        "dname": "Sneeze Detected Please Check!!!",
-        "x": 1080,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "7119b8f6f3f60e37",
-        "type": "function",
-        "z": "c0b63e7652249841",
-        "name": "composeEmailMessage",
-        "func": "\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 750,
-        "y": 280,
-        "wires": [
-            [
-                "ccf15231d1cdcb5b"
-            ]
-        ]
-    },
-    {
-        "id": "7b77a475b1cd54ec",
-        "type": "Stackhero-InfluxDB-v2-write",
-        "z": "c0b63e7652249841",
-        "server": "cf6b032328d119b7",
-        "name": "",
-        "x": 1090,
-        "y": 80,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "74f5d8cd6da85920",
-        "type": "join",
-        "z": "c0b63e7652249841",
-        "name": "",
-        "mode": "auto",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": true,
-        "timeout": "",
-        "count": "",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 510,
-        "y": 280,
-        "wires": [
-            [
-                "7119b8f6f3f60e37",
-                "0ca326f223144f80"
-            ]
-        ]
-    },
-    {
-        "id": "28ddd91bf9675b72",
-        "type": "telegram sender",
-        "z": "c0b63e7652249841",
-        "name": "IoTSneezeNotifierBot",
-        "bot": "63e2e5f6a6cc5a5b",
-        "haserroroutput": false,
-        "outputs": 1,
-        "x": 1060,
-        "y": 200,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "0ca326f223144f80",
-        "type": "function",
-        "z": "c0b63e7652249841",
-        "name": "composeTelegramMessage",
-        "func": "msg = \"Hey Farmer Sneeze detected! Please check teh dashboard for other parameters\"\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 740,
-        "y": 240,
-        "wires": [
-            [
-                "28ddd91bf9675b72"
-            ]
-        ]
+        "id": "415d04bba55eb9da",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]

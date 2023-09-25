@@ -1,0 +1,21 @@
+@startuml
+start
+:Data Collection;
+if (Data from Arduino Nano RP2040?) then (yes)
+  :Capture & Process Sneezes;
+endif
+if (Data from Arduino Nano IoT33?) then (yes)
+  :Collect Air Quality Data;
+endif
+if (Data from Jetson Nano?) then (yes)
+  :Capture Visual Data;
+endif
+:Data Transmission via WIFI;
+:Middleware Processing in Node-RED;
+if (Sneeze Detected?) then (yes)
+  :Store 30-sec Video in Cloud Storage;
+endif
+:Process & Integrate Data in Node-RED;
+:Store Processed Data in InfluxDB;
+stop
+@enduml

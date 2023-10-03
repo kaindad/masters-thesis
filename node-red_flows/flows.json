@@ -1,0 +1,130 @@
+[
+    {
+        "id": "561542e8.9e4a24",
+        "type": "tab",
+        "label": "MQTT authentication",
+        "disabled": false,
+        "info": "MQTT authentication flow"
+    },
+    {
+        "id": "518fdd2b.0938b4",
+        "type": "http in",
+        "z": "561542e8.9e4a24",
+        "name": "/mqttAuthentication/userGet",
+        "url": "/mqttAuthentication/userGet",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 160,
+        "wires": [
+            [
+                "32aa9455.eb3cf4"
+            ]
+        ]
+    },
+    {
+        "id": "c3d2a88d.daf4a8",
+        "type": "function",
+        "z": "561542e8.9e4a24",
+        "name": "Authentication",
+        "func": "const found = msg.users.findIndex(([ username, password ]) => msg.payload.username === username && msg.payload.password === password) !== -1;\n\nconst msgResponse = Object.assign(\n    {},\n    msg,\n    { payload: { found }\n    }\n);\n\nif (found) {\n    return [ msgResponse, null ];\n}\nelse {\n    return [ null, msgResponse ];\n}",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 780,
+        "y": 160,
+        "wires": [
+            [
+                "e5d39529.83e818"
+            ],
+            [
+                "658f6d7b.dadd5c"
+            ]
+        ]
+    },
+    {
+        "id": "e5d39529.83e818",
+        "type": "http response",
+        "z": "561542e8.9e4a24",
+        "name": "Accept (200)",
+        "statusCode": "200",
+        "headers": {},
+        "x": 1110,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "658f6d7b.dadd5c",
+        "type": "http response",
+        "z": "561542e8.9e4a24",
+        "name": "Reject (401)",
+        "statusCode": "401",
+        "headers": {},
+        "x": 1110,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "32aa9455.eb3cf4",
+        "type": "template",
+        "z": "561542e8.9e4a24",
+        "name": "Users",
+        "field": "users",
+        "fieldType": "msg",
+        "format": "json",
+        "syntax": "plain",
+        "template": "[\n    [ \"node-red\", \"pAHMQU2nY5uemZ3MdEGQEhTnBOFM92ab\" ],\n    [ \"user1\", \"3bxfWRCBFQEguGB5jQbqqckYxNU1wYap\" ],\n    [ \n        \"user2\", \n        \"GbSIejO1HMSERBYbEsjLhmf9JcKZix1N\" ],\n    [\n        \"iot33-air-quality\",\n        \"password1234\"\n    ]\n]",
+        "output": "json",
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "c3d2a88d.daf4a8"
+            ]
+        ]
+    },
+    {
+        "id": "c87f669.2817618",
+        "type": "http in",
+        "z": "561542e8.9e4a24",
+        "name": "/mqttAuthentication/userSuper",
+        "url": "/mqttAuthentication/userSuper",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 260,
+        "wires": [
+            [
+                "658f6d7b.dadd5c"
+            ]
+        ]
+    },
+    {
+        "id": "cd3a1fa1.a14c98",
+        "type": "http in",
+        "z": "561542e8.9e4a24",
+        "name": "/mqttAuthentication/aclCheck",
+        "url": "/mqttAuthentication/aclCheck",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 200,
+        "y": 60,
+        "wires": [
+            [
+                "e5d39529.83e818"
+            ]
+        ]
+    },
+    {
+        "id": "120753f0.f97f7c",
+        "type": "comment",
+        "z": "561542e8.9e4a24",
+        "name": "README",
+        "info": "This is the MQTT authentication flow used by Mosquitto server.\n\nYou can add or remove users in the template `Users`.\n\nThe format is: `[ \"username\", \"password\" ]`\n\nYou'll get more informations about this flow on [Stackhero's documentation](https://www.stackhero.io/services/Node-RED/documentations)",
+        "x": 593.5,
+        "y": 352,
+        "wires": []
+    }
+]
